@@ -1,4 +1,5 @@
 <?php
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,5 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $posts = Post::with('category', 'user')->take(5)->get()->toJson();
+
+    return response()->json($posts);
 });

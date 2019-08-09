@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,10 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/', function (Request $request) {
+    $posts = Post::with('category', 'user')->take(5)->get();
+
+    return response()->json($posts);
 });
